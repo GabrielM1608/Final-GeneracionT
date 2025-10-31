@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingreso - Escuela Técnica N°35</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <header>
+        <img src="https://yt3.googleusercontent.com/ytc/AIdro_mLFWnKFPGUnsl0ZdJNmObibVkYq8Aoc0C9NvYO30m-jw=s160-c-k-c0x00ffffff-no-rj" 
+             alt="Logo Escuela Técnica N°35" 
+             class="logo-header">
+        <h1>Escuela Técnica N°35</h1>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="institucional.html">Institucional</a></li>
+            <li><a href="carreras.html">Carreras</a></li>
+            <li><a href="contacto.html">Contacto</a></li>
+            <li><a href="suyai.html">SUYAI</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="login-section">
+            <h2>Ingreso de Administrador</h2>
+            <p>Ingrese sus credenciales para acceder a la sección de informes.</p>
+
+            <form id="form-login" class="login-form">
+                <label for="usuario">Usuario:</label>
+                <input type="text" id="usuario" name="usuario" placeholder="Ingrese usuario" required>
+
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" placeholder="Ingrese contraseña" required>
+
+                <button type="submit">Ingresar</button>
+                <p id="mensaje-error"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Escuela Técnica N°35</p>
+    </footer>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>

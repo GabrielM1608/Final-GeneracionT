@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Administración de Informes - Escuela Técnica N°35</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+<header>
+    <img src="https://yt3.googleusercontent.com/ytc/AIdro_mLFWnKFPGUnsl0ZdJNmObibVkYq8Aoc0C9NvYO30m-jw=s160-c-k-c0x00ffffff-no-rj" 
+         alt="Logo Escuela Técnica N°35" 
+         class="logo-header">
+    <h1>Escuela Técnica N°35</h1>
+</header>
+<nav>
+    <ul>
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="institucional.html">Institucional</a></li>
+        <li><a href="carreras.html">Carreras</a></li>
+        <li><a href="contacto.html">Contacto</a></li>
+        <li><a href="suyai.html">SUYAI</a></li>
+    </ul>
+</nav>
+<main>
+    <h2>Generar Nuevo Informe</h2>
+    
+    <form id="form-informe">
+        <div class="form-group">
+            <label for="titulo">Título del Informe:</label>
+            <input type="text" id="titulo" name="titulo" required>
+        </div>
+        <div class="form-group">
+            <label for="contenido">Contenido:</label>
+            <textarea id="contenido" name="contenido" rows="6" required></textarea>
+        </div>
+        <button type="submit" class="btn-guardar">Publicar Informe</button>
+    </form>
+
+    <hr>
+
+    <section id="titulo-administracion">
+        <h2>Historial de Informes y Administración</h2> 
+    </section>
+    
+    <section id="lista-informes" class="informes-container">
+        <p id="mensaje-vacio">No hay informes publicados aún.</p>
+    </section>
+</main>
+<footer>
+    <p>&copy; 2025 Escuela Técnica N°35</p>
+</footer>
+
+<script type="module" src="script.js"></script> 
+</body>
+</html>
