@@ -83,6 +83,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const FORM_INFORME = document.getElementById('form-informe');
     const LISTA_INFORMES = document.getElementById('lista-informes');
 
+    function procesarTexto(texto) {
+        texto = texto.replace(/(https?:\/\/[^\s]+)/g, function(url) {
+            return `<a href="${url}" target="_blank">${url}</a>`;
+        });
+        return texto;
+    }
+
     function cargarInformes() {
         if (!LISTA_INFORMES) return;
         const dbRef = ref(db, 'informes/');
@@ -103,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 informeDiv.innerHTML = `
                     <h3>${informe.titulo}</h3>
                     <p class="fecha-publicacion">Publicado el: ${fechaPublicacion}</p>
-                    <p>${informe.contenido.replace(/\n/g, '<br>')}</p>
+                    <p>${procesarTexto(informe.contenido).replace(/\n/g, '<br>')}</p>
                 `;
                 LISTA_INFORMES.appendChild(informeDiv);
             });
@@ -127,3 +134,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
