@@ -119,11 +119,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarInformes();
 
+    const quill = new Quill('#editor-container', {
+        theme: 'snow', 
+        modules: {
+            toolbar: [
+                [{ 'header': '1'}, { 'header': '2'}, { 'font': [] }],
+                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                [{ 'align': [] }],
+                ['bold', 'italic', 'underline', 'strike'],
+                ['link', 'image'],
+                ['blockquote', 'code-block'],
+                [{ 'script': 'sub'}, { 'script': 'super' }],
+                [{ 'indent': '-1'}, { 'indent': '+1' }],
+                [{ 'color': [] }, { 'background': [] }],
+                [{ 'align': [] }],
+                ['clean']                                         
+            ]
+        }
+    });
+
     if (FORM_INFORME) {
         FORM_INFORME.addEventListener('submit', (e) => {
             e.preventDefault();
             const titulo = document.getElementById('titulo').value;
-            const contenido = document.getElementById('contenido').value;
+            const contenido = quill.root.innerHTML;
             const dbRef = ref(db, 'informes/');
             push(dbRef, {
                 titulo,
@@ -134,4 +153,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
