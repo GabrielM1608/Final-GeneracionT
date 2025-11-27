@@ -1,21 +1,8 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-app.js";
-import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
-
 document.addEventListener('DOMContentLoaded', () => {
-    const firebaseConfig = {
-        apiKey: "AIzaSyB5jwR4dGtLUfxe-CWR8qzl-_L4fUHKrJY",
-        authDomain: "informes-81a21.firebaseapp.com",
-        projectId: "informes-81a21",
-        storageBucket: "informes-81a21.firebasestorage.app",
-        messagingSenderId: "511446475359",
-        appId: "1:511446475359:web:020bf09611c488d1c231ea",
-        measurementId: "G-MK5YJL6MMW",
-        databaseURL: "https://informes-81a21-default-rtdb.firebaseio.com/"
-    };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
+    const API_BASE = "http://127.0.0.1:8787";
 
+    // ---------- LOGIN ----------
     const usuarioGuardado = sessionStorage.getItem('usuario');
     const esPaginaLogin = window.location.pathname.endsWith('ingreso.html');
     const esPaginaInformes = window.location.pathname.endsWith('informes.html');
@@ -33,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const usuarioInput = document.getElementById('usuario').value.trim();
             const contrasenaInput = document.getElementById('contrasena').value.trim();
             const mensajeError = document.getElementById('mensaje-error');
-
             const usuarioValido = "admin";
             const contrasenaValida = "1234";
 
@@ -51,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ---------- SLIDER ----------
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
@@ -67,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentSlide += direction;
         showSlide(currentSlide);
     }
+
     window.moveSlide = moveSlide;
 
     function autoplay() {
@@ -76,36 +64,38 @@ document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('slider')) {
         showSlide(currentSlide);
         let autoplayInterval = setInterval(autoplay, 3000);
-        document.querySelector('.slider-container').addEventListener('mouseover', () => clearInterval(autoplayInterval));
-        document.querySelector('.slider-container').addEventListener('mouseout', () => autoplayInterval = setInterval(autoplay, 3000));
+        const sliderContainer = document.querySelector('.slider-container');
+        if (sliderContainer) {
+            sliderContainer.addEventListener('mouseover', () => clearInterval(autoplayInterval));
+            sliderContainer.addEventListener('mouseout', () => autoplayInterval = setInterval(autoplay, 3000));
+        }
     }
 
+    // ---------- INFORMES ----------
     const FORM_INFORME = document.getElementById('form-informe');
     const LISTA_INFORMES = document.getElementById('lista-informes');
 
     function procesarTexto(texto) {
-        texto = texto.replace(/(https?:\/\/[^\s]+)/g, function(url) {
+        return texto.replace(/(https?:\/\/[^\s]+)/g, function(url) {
             return `<a href="${url}" target="_blank">${url}</a>`;
         });
-        return texto;
     }
 
-    function cargarInformes() {
+    async function cargarInformes() {
         if (!LISTA_INFORMES) return;
-        const dbRef = ref(db, 'informes/');
-        onValue(dbRef, (snapshot) => {
-            const informesData = snapshot.val();
+        try {
+            const response = await fetch(`${API_BASE}/informes`);
+            const informesData = await response.json();
             LISTA_INFORMES.innerHTML = '';
-            if (!informesData) {
+            if (!informesData || informesData.length === 0) {
                 LISTA_INFORMES.innerHTML = '<p id="mensaje-vacio">No hay informes publicados aún.</p>';
                 return;
             }
-            Object.values(informesData).forEach(informe => {
+            informesData.forEach(informe => {
                 const informeDiv = document.createElement('article');
                 informeDiv.classList.add('informe');
                 const fechaPublicacion = new Date(informe.timestamp).toLocaleString('es-AR', {
-                    year: 'numeric', month: 'long', day: 'numeric',
-                    hour: '2-digit', minute: '2-digit'
+                    year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
                 });
                 informeDiv.innerHTML = `
                     <h3>${informe.titulo}</h3>
@@ -114,42 +104,151 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 LISTA_INFORMES.appendChild(informeDiv);
             });
-        });
+        } catch (error) {
+            console.error("Error cargando informes:", error);
+            LISTA_INFORMES.innerHTML = "<p>Error al cargar los informes.</p>";
+        }
     }
 
     cargarInformes();
 
-    const quill = new Quill('#editor-container', {
-        theme: 'snow', 
-        modules: {
-            toolbar: [
-                [{ 'header': '1'}, { 'header': '2'}, { 'font': [] }],
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'align': [] }],
-                ['bold', 'italic', 'underline', 'strike'],
-                ['link', 'image'],
-                ['blockquote', 'code-block'],
-                [{ 'script': 'sub'}, { 'script': 'super' }],
-                [{ 'indent': '-1'}, { 'indent': '+1' }],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'align': [] }],
-                ['clean']                                         
-            ]
-        }
-    });
-
-    if (FORM_INFORME) {
-        FORM_INFORME.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const titulo = document.getElementById('titulo').value;
-            const contenido = quill.root.innerHTML;
-            const dbRef = ref(db, 'informes/');
-            push(dbRef, {
-                titulo,
-                contenido,
-                timestamp: new Date().toISOString()
-            });
-            FORM_INFORME.reset();
+    let quill = null;
+    if (document.getElementById('editor-container')) {
+        quill = new Quill('#editor-container', {
+            theme: 'snow',
+            modules: {
+                toolbar: [
+                    [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                    [{ 'align': [] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['link', 'image'],
+                    ['blockquote', 'code-block'],
+                    [{ 'script': 'sub' }, { 'script': 'super' }],
+                    [{ 'indent': '-1' }, { 'indent': '+1' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    ['clean']
+                ]
+            }
         });
     }
+
+    if (FORM_INFORME) {
+        FORM_INFORME.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const titulo = document.getElementById('titulo').value;
+            const contenido = quill ? quill.root.innerHTML : '';
+            try {
+                await fetch(`${API_BASE}/informes`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ titulo, contenido, timestamp: new Date().toISOString() })
+                });
+                FORM_INFORME.reset();
+                cargarInformes();
+            } catch (error) {
+                console.error("Error enviando informe:", error);
+                alert("Error al guardar informe");
+            }
+        });
+    }
+
+    // ---------- TURNOS ----------
+    const formTurno = document.getElementById('form-turno');
+    const fechaInput = document.getElementById('fecha');
+    const horaSelect = document.getElementById('hora');
+    const mensajeTurno = document.getElementById('mensaje-turno');
+
+    function generarHorarios() {
+        if (!horaSelect) return;
+        horaSelect.innerHTML = '<option value="">Elegí una hora</option>';
+        let horaInicio = 9;
+        let minuto = 0;
+        while (horaInicio < 17 || (horaInicio === 17 && minuto === 0)) {
+            let h = horaInicio.toString().padStart(2, '0');
+            let m = minuto.toString().padStart(2, '0');
+            let valor = `${h}:${m}`;
+            let opcion = document.createElement('option');
+            opcion.value = valor;
+            opcion.textContent = valor;
+            horaSelect.appendChild(opcion);
+            minuto += 30;
+            if (minuto === 60) { minuto = 0; horaInicio++; }
+        }
+    }
+
+    if (fechaInput) fechaInput.addEventListener('change', generarHorarios);
+    generarHorarios();
+
+    if (formTurno) {
+        formTurno.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre-turno').value.trim();
+            const fecha = fechaInput.value;
+            const hora = horaSelect.value;
+
+            if (!nombre || !fecha || !hora) {
+                mensajeTurno.textContent = "Complete todos los campos";
+                mensajeTurno.style.color = "red";
+                return;
+            }
+
+            try {
+                await fetch(`${API_BASE}/turnos`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ nombre, fecha, hora, timestamp: new Date().toISOString() })
+                });
+
+                mensajeTurno.textContent = `Turno reservado para ${nombre} el ${fecha} a las ${hora}`;
+                mensajeTurno.style.color = "green";
+                formTurno.reset();
+                generarHorarios();
+            } catch (error) {
+                console.error("Error al guardar turno:", error);
+                mensajeTurno.textContent = "Error al guardar el turno.";
+                mensajeTurno.style.color = "red";
+            }
+        });
+    }
+
+    // ---------- FORMULARIO DE CONTACTO ----------
+    const formContacto = document.getElementById('form-contacto-general');
+    const respuestaGeneral = document.getElementById('respuesta-general');
+
+    if (formContacto) {
+        formContacto.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const nombre = document.getElementById('nombre-general').value.trim();
+            const email = document.getElementById('email-general').value.trim();
+            const mensaje = document.getElementById('mensaje-texto').value.trim();
+
+            if (!nombre || !email || !mensaje) {
+                respuestaGeneral.textContent = "Complete todos los campos";
+                respuestaGeneral.style.color = "red";
+                return;
+            }
+
+            try {
+                // Llamada al Worker que usa Mailjet
+                const res = await fetch(`${API_BASE}/contacto`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, email, mensaje })
+                });
+
+                const data = await res.json();
+                respuestaGeneral.textContent = data.message;
+                respuestaGeneral.style.color = data.success ? "green" : "red";
+
+                if (data.success) formContacto.reset();
+            } catch (err) {
+                console.error(err);
+                respuestaGeneral.textContent = "Error al enviar el mensaje";
+                respuestaGeneral.style.color = "red";
+            }
+        });
+    }
+
 });

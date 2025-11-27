@@ -25,7 +25,6 @@ header {
   height: 55px;
 }
 
-
 nav {
     background-color: #000000;
     box-shadow: inset 0 -2px 5px rgba(255,255,255,0.1);
@@ -281,6 +280,7 @@ footer {
 .btn-eliminar:hover {
     background-color: #c82333;
 }
+
 .login-main {
   display: flex;
   justify-content: center;
@@ -326,3 +326,45 @@ footer {
   margin-top: 10px;
 }
 
+.contact-section {
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.contact-info {
+    padding-left: 10px;
+}
+
+.campo-form {
+    margin-bottom: 15px;
+}
+
+.campo-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.campo-form input, .campo-form select, .campo-form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.map-container {
+    margin-bottom: 20px;
+}
+
+.map-container iframe {
+    width: 100%;
+    height: 300px;
+    border: 0;
+}
+
+@media (max-width: 768px) {
+    .map-container iframe {
+        height: 250px;
+    }
+}

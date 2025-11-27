@@ -1,37 +1,111 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Contacto - Escuela Técnica N°35</title>
-    <link rel="stylesheet" href="estilos.css">
+  <meta charset="UTF-8">
+  <title>Contacto - Escuela Técnica N°35</title>
+  <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+
 <header>
-    <img src="https://yt3.googleusercontent.com/ytc/AIdro_mLFWnKFPGUnsl0ZdJNmObibVkYq8Aoc0C9NvYO30m-jw=s160-c-k-c0x00ffffff-no-rj" 
-         alt="Logo Escuela Técnica N°35" 
-         class="logo-header">
-    <h1>Escuela Técnica N°35</h1>
+  <img src="https://yt3.googleusercontent.com/ytc/AIdro_mLFWnKFPGUnsl0ZdJNmObibVkYq8Aoc0C9NvYO30m-jw=s160-c-k-c0x00ffffff-no-rj" 
+       alt="Logo Escuela Técnica N°35" 
+       class="logo-header">
+  <h1>Escuela Técnica N°35</h1>
 </header>
-    <nav>
-        <ul>
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="institucional.html">Institucional</a></li>
-            <li><a href="carreras.html">Carreras</a></li>
-            <li><a href="contacto.html">Contacto</a></li>
-           <li><a href="suyai.html">SUYAI</a></li>
-        </ul>
-    </nav>
-    <main>
-        <h2>Contacto</h2>
-        <p>Tel-Fax: 4567-5838/1441</p>
-        <p>Email: det_35_de18@bue.edu.ar</p>
-                <h2>Ubicacion</h2>
-        <p>La Escuela Técnica N°35 se ubica en Av. Lope de Vega 2150</p>
-        <div><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.3448945983605!2d-58.51645580000006!3d-34.62072360000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcc98a8194e45b%3A0xeb9e1532636e2286!2sEscuela%20T%C3%A9cnica%20N%C2%B0%2035%20-%20Ing.%20Eduardo%20Latzina!5e0!3m2!1ses!2sar!4v1757352495781!5m2!1ses!2sar" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-        <div><iframe src="https://www.google.com/maps/embed?pb=!4v1757352536768!6m8!1m7!1seQ_wVni3FQbZozvYpQVF1A!2m2!1d-34.62061596428791!2d-58.51639873827728!3f247.27434715537976!4f2.179115435900215!5f0.4000000000000002" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
-    </main>
-    <footer>
-        <p>&copy; 2025 Escuela Técnica N°35</p>
-    </footer>
+
+<nav>
+  <ul>
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="institucional.html">Institucional</a></li>
+    <li><a href="carreras.html">Carreras</a></li>
+    <li><a href="contacto.html">Contacto</a></li>
+    <li><a href="suyai.html">SUYAI</a></li>
+  </ul>
+</nav>
+
+<main>
+  <section class="contact-section fade-in">
+
+    <h2>Contacto</h2>
+    <div class="contact-info">
+      <p><strong>Tel-Fax:</strong> 4567-5838/1441</p>
+      <p><strong>Email:</strong> det_35_de18@bue.edu.ar</p>
+    </div>
+
+    <section class="general-contact">
+      <h3>Envíanos un Mensaje</h3>
+
+      <form id="form-contacto-general">
+        <div class="campo-form">
+          <label for="nombre-general">Nombre:</label>
+          <input type="text" id="nombre-general" name="nombre" required>
+        </div>
+
+        <div class="campo-form">
+          <label for="email-general">Email:</label>
+          <input type="email" id="email-general" name="email" required>
+        </div>
+
+        <div class="campo-form">
+          <label for="mensaje-texto">Mensaje:</label>
+          <textarea id="mensaje-texto" name="mensaje" rows="4" required></textarea>
+        </div>
+
+        <button type="submit" class="btn-guardar">Enviar Mensaje</button>
+      </form>
+
+      <p id="respuesta-general"></p>
+    </section>
+
+    <section id="agenda-turnos">
+      <h3>Agenda de Turnos</h3>
+
+      <form id="form-turno">
+        <div class="campo-form">
+          <label for="nombre-turno">Nombre:</label>
+          <input type="text" id="nombre-turno" name="nombre" required>
+        </div>
+
+        <div class="campo-form">
+          <label for="fecha">Seleccioná una fecha:</label>
+          <input type="date" id="fecha" required>
+        </div>
+
+        <div class="campo-form">
+          <label for="hora">Seleccioná un horario:</label>
+          <select id="hora" required>
+            <option value="">Elegí una hora</option>
+          </select>
+        </div>
+
+        <button type="submit" class="btn-guardar">Reservar Turno</button>
+      </form>
+
+      <p id="mensaje-turno"></p>
+    </section>
+
+    <section class="ubicacion">
+      <h3>Ubicación</h3>
+      <p>La Escuela Técnica N°35 se ubica en Av. Lope de Vega 2150</p>
+
+      <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3283.34507032056!2d-58.51903072348933!3d-34.62071915839754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcc98a8194e45b%3A0xeb9e1532636e2286!2sEscuela%20T%C3%A9cnica%20N%C2%B0%2035%20-%20Ing.%20Eduardo%20Latzina!5e0!3m2!1ses!2sar!4v1763659980489!5m2!1ses!2sar" 
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+
+        <iframe src="https://www.google.com/maps/embed?pb=!4v1763660071296!6m8!1m7!1s4bWCUrjnS3RpL4MFb8gh-A!2m2!1d-34.62054961959831!2d-58.51648005386101!3f217.89480239908045!4f7.036349229977731!5f0.7820865974627469" 
+                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+
+    </section>
+
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2025 Escuela Técnica N°35</p>
+</footer>
+
+<script type="module" src="script.js"></script>
 </body>
 </html>

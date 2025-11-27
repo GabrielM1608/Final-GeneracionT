@@ -1,0 +1,13 @@
+name = "villanueva-final"
+main = "worker.js"
+compatibility_date = "2025-11-27"
+
+[[d1_databases]]
+binding = "informes_db"
+database_name = "informes-db"
+database_id = "a381e1ca-de58-4d47-965a-2172bb56b0fd"
+
+[vars]
+MAILJET_API_KEY = "b1242c8b03aadc2df187246918f22fe0"
+MAILJET_SECRET_KEY = "42ae7aad341cc0e1b26af9426b34cdc1"
+TO_EMAIL = "gabrielmendez24734@gmail.com"
