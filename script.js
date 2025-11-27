@@ -1,8 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    const API_BASE = "http://127.0.0.1:8787";
+    const API_BASE = "https://villanueva-final.gabrielmendez24734.workers.dev";
 
-    // ---------- LOGIN ----------
     const usuarioGuardado = sessionStorage.getItem('usuario');
     const esPaginaLogin = window.location.pathname.endsWith('ingreso.html');
     const esPaginaInformes = window.location.pathname.endsWith('informes.html');
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ---------- SLIDER ----------
     let currentSlide = 0;
     const slides = document.querySelectorAll('.slide');
     const totalSlides = slides.length;
@@ -71,7 +69,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // ---------- INFORMES ----------
     const FORM_INFORME = document.getElementById('form-informe');
     const LISTA_INFORMES = document.getElementById('lista-informes');
 
