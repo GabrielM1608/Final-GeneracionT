@@ -2,7 +2,6 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // ---------- CORS ----------
     if (request.method === "OPTIONS") {
       return new Response(null, {
         headers: {
@@ -13,16 +12,14 @@ export default {
       });
     }
 
-    // Normalizar path para evitar slash final
     const pathname = url.pathname.replace(/\/$/, "");
     console.log("PATH recibida:", pathname);
 
-    // ---------- RUTA RAÍZ ----------
     if (pathname === "") {
       return new Response("WORKER FUNCIONANDO ✅");
     }
 
-    // ---------- CONTACTO ----------
+
     if (pathname === "/contacto" && request.method === "POST") {
       const data = await request.json();
       const { nombre, email, mensaje } = data;
@@ -33,7 +30,6 @@ export default {
         });
       }
 
-      // Guardar en base de datos D1
       try {
         await env.informes_db
           .prepare("INSERT INTO mensajes (nombre, email, mensaje, timestamp) VALUES (?, ?, ?, ?)")
@@ -46,7 +42,6 @@ export default {
         });
       }
 
-      // Enviar email con Mailjet
       try {
         const MAILJET_API_KEY = env.MAILJET_API_KEY;
         const MAILJET_SECRET_KEY = env.MAILJET_SECRET_KEY;
@@ -92,7 +87,6 @@ export default {
       }
     }
 
-    // ---------- INFORMES ----------
     if (pathname === "/informes" && request.method === "GET") {
       const { results } = await env.informes_db.prepare("SELECT * FROM informes ORDER BY id DESC").all();
       return new Response(JSON.stringify(results), {
@@ -111,7 +105,6 @@ export default {
       });
     }
 
-    // ---------- TURNOS ----------
     if (pathname === "/turnos" && request.method === "POST") {
       const data = await request.json();
       await env.informes_db
