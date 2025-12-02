@@ -605,3 +605,138 @@ footer {
     .slider-container { height: 200px; }
     .video-card iframe { height: 180px; }
 }
+footer {
+    background-color: #000;
+    color: #fff;
+    padding: 25px 20px;
+}
+footer a {
+    color: #ffffff;        
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+footer a:hover {
+    color: #ff0000;
+    text-decoration: underline;       
+}
+
+.footer-contenido {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+
+.footer-left,
+.footer-center,
+.footer-right {
+    flex: 1;
+}
+
+
+.footer-center {
+    text-align: center;
+}
+
+
+.footer-left {
+    text-align: left;
+}
+
+.footer-right {
+    text-align: right;
+}
+
+
+footer h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+
+footer p,
+footer a {
+    margin: 3px 0;
+    font-size: 14px;
+}
+
+
+.footer-copy {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px solid #333;
+    text-align: center;
+    font-size: 12px;
+}
+.ig-icon i {
+    font-size: 32px;
+    color: #ffffff;
+    transition: 0.3s ease;
+}
+
+.ig-icon:hover i {
+    background: linear-gradient(45deg,
+        #f09433 0%,
+        #e6683c 25%,
+        #dc2743 50%,
+        #cc2366 75%,
+        #bc1888 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.seccion-instagram {
+    display: flex;
+    justify-content: flex-start; 
+    align-items: center;   
+    padding: 0;
+}
+
+.icono-ig-centro i {
+    font-size: 60px;
+    background: linear-gradient(45deg, #f58529, #dd2a7b, #8134af, #515bd4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.icono-ig-centro i:hover {
+    transform: scale(1.15);
+}
+.boton-centro-section {
+    display: flex;
+    justify-content: center;
+    padding: 60px 0;
+}
+
+.boton-centro {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    background: #1877f2;
+    color: white;
+    padding: 18px 35px;
+    font-size: 22px;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0px 6px 18px rgba(0,0,0,0.2);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.boton-centro i {
+    font-size: 32px;
+}
+
+.boton-centro:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0px 10px 25px rgba(0,0,0,0.28);
+    background: #0f63c4;
+}
+
+
